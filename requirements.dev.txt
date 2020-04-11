@@ -1,0 +1,10 @@
+-r requirements.txt
+coverage
+mypy
+sphinx
+twine
+wheel
+flake8
+tox
+parameterized
+hypothesis
