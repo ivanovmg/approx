@@ -19,7 +19,41 @@ Here is a simple example:
 
 .. code-block:: python
 
-    import equator
-    # Fill this section in with the common use-case.
+   from equator import equals
 
-The `API Reference <http://equator.readthedocs.io>`_ provides API-level documentation.
+   item1 = [
+       {
+           1: [
+               {1: [1, 2]},
+               [1, 2.0001],
+           ],
+       },
+       [3, [4, [5]]],
+   ] 
+
+   item2 = [
+       {
+           1: [
+               {1.0001: [1, 2.0001]},
+               [1.0001, 1.9999],
+           ],
+       },
+       [2.9999, [4, [5.002]]],
+   ]
+
+   result = equals.approx(item1, item2, rel_tol=1e-2)
+   assert result
+
+The function ``approx`` allows one
+to compare approximately objects of various types.
+
+The motivation to create this function was that ``pytest.approx``
+does not allow comparison of the complex objects.
+In contrast, this function allows one iterate through ``__dict__``
+of arbitrary objects and make use of ``math.isclose``
+when encountering numeric types.
+
+TODO
+====
+
+Currently one may expect issues with sets and ``Decimal``.
