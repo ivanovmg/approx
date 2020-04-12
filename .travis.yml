@@ -11,5 +11,6 @@ before_install:
 install:
   - make dist
   - pip install dist/equator-*.whl
+  - pip install hypothesis parameterized
 script:
   - make test
