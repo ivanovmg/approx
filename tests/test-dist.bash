@@ -30,6 +30,9 @@ pip install pip --upgrade
 echo "Installing $RELEASE_ARCHIVE"
 pip install $RELEASE_ARCHIVE
 
+echo "Installing development dependencies"
+pip install -r ../requirements.dev.txt
+
 echo "Running tests"
 cd ../tests
 python -m unittest discover -s .

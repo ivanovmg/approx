@@ -1,7 +1,5 @@
 import unittest
 
-import equator
-
 
 class TestExample(unittest.TestCase):
     def test_basic_example(self):
@@ -15,7 +13,7 @@ class TestExample(unittest.TestCase):
                 ],
             },
             [3, [4, [5]]],
-        ] 
+        ]
 
         item2 = [
             {

@@ -28,5 +28,27 @@ Here is a simple example:
 
 .. code-block:: python
 
-    import equator
-    # Fill this section in with the common use-case.
+   from equator import equals
+
+   item1 = [
+       {
+           1: [
+               {1: [1, 2]},
+               [1, 2.0001],
+           ],
+       },
+       [3, [4, [5]]],
+   ] 
+
+   item2 = [
+       {
+           1: [
+               {1.0001: [1, 2.0001]},
+               [1.0001, 1.9999],
+           ],
+       },
+       [2.9999, [4, [5.002]]],
+   ]
+
+   result = equals.approx(item1, item2, rel_tol=1e-2)
+   assert result

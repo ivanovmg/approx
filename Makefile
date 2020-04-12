@@ -63,7 +63,7 @@ check-coverage:
 # help: style                          - perform code format compliance check
 .PHONY: style
 style:
-	@black src/equator tests
+	@flake8 src/equator tests
 
 
 
