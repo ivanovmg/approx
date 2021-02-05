@@ -19,15 +19,15 @@ Install Guide
 
         $ python -m venv venv
         $ source venv/bin/activate
-        (venv) $ pip install equator
+        (venv) $ pip install approx
 
-The simplest way to install equator is using Pip.
+The simplest way to install approx is using Pip.
 
 .. code-block:: console
 
-    $ pip install equator
+    $ pip install approx
 
-This will install ``equator`` and all of its dependencies.
+This will install ``approx`` and all of its dependencies.
 
 
 .. _api-reference-label:
@@ -35,7 +35,7 @@ This will install ``equator`` and all of its dependencies.
 API Reference
 =============
 
-The `API Reference <http://equator.readthedocs.io>`_ provides API-level documentation.
+The `API Reference <http://approx.readthedocs.io>`_ provides API-level documentation.
 
 
 .. include:: ../../../CHANGELOG.rst
@@ -46,7 +46,7 @@ The `API Reference <http://equator.readthedocs.io>`_ provides API-level document
 Report Bugs
 ===========
 
-Report bugs at the `issue tracker <https://github.com/ivanovmg/equator/issues>`_.
+Report bugs at the `issue tracker <https://github.com/ivanovmg/approx/issues>`_.
 
 Please include:
 

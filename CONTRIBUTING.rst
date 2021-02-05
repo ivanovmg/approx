@@ -16,14 +16,14 @@ easier to review and less likely to need major re-work or even be rejected.
 The workflow that developers typically use to fix a bug or add enhancements
 is as follows.
 
-* Fork the ``equator`` repo into your account.
+* Fork the ``approx`` repo into your account.
 
 * Obtain the source by cloning it onto your development machine.
 
   .. code-block:: console
 
-      $ git clone git@github.com:your_name_here/equator.git
-      $ cd equator
+      $ git clone git@github.com:your_name_here/approx.git
+      $ cd approx
 
 * Create a branch for local development:
 

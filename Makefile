@@ -3,12 +3,12 @@
 # python command links to the appropriate virtual environment Python.
 
 VENVS_DIR := $(HOME)/.venvs
-VENV_DIR := $(VENVS_DIR)/equator
+VENV_DIR := $(VENVS_DIR)/approx
 
 # Do not remove this block. It is used by the 'help' rule when
 # constructing the help output.
 # help:
-# help: equator Makefile help
+# help: approx Makefile help
 # help:
 
 # help: help                           - display this makefile's help information
@@ -55,7 +55,7 @@ test-verbose:
 check-coverage:
 	@coverage run -m unittest discover -s tests
 	@# produce html coverage report on modules
-	@coverage html -d docs/source/coverage --include="src/equator/*"
+	@coverage html -d docs/source/coverage --include="src/approx/*"
 	@# rename coverage html file for latter use with documentation
 	@cd docs/source/coverage; mv index.html coverage.html
 
@@ -63,20 +63,20 @@ check-coverage:
 # help: style                          - perform code format compliance check
 .PHONY: style
 style:
-	@flake8 src/equator tests
+	@flake8 src/approx tests
 
 
 
 # help: check-types                    - check type hint annotations
 .PHONY: check-types
 check-types:
-	@cd src; MYPYPATH=$(VENV_DIR)/lib/python*/site-packages mypy -p equator --ignore-missing-imports
+	@cd src; MYPYPATH=$(VENV_DIR)/lib/python*/site-packages mypy -p approx --ignore-missing-imports
 
 
 # help: docs                           - generate project documentation
 .PHONY: check-coverage
 docs: check-coverage
-	@cd docs; rm -rf source/api/equator*.rst source/api/modules.rst build/*
+	@cd docs; rm -rf source/api/approx*.rst source/api/modules.rst build/*
 	@cd docs; make html
 	@# Copy coverage output into docs build tree
 	@cd docs; cp -R source/coverage build/html/.
@@ -103,13 +103,13 @@ dist:
 # help: dist-test                      - test a whell distribution package
 .PHONY: dist-test
 dist-test: dist
-	@cd dist && ../tests/test-dist.bash ./equator-*-py3-none-any.whl
+	@cd dist && ../tests/test-dist.bash ./approx-*-py3-none-any.whl
 
 
 # help: dist-upload                    - upload a wheel distribution package
 .PHONY: dist-upload
 dist-upload:
-	@twine upload dist/equator-*-py3-none-any.whl
+	@twine upload dist/approx-*-py3-none-any.whl
 
 
 # Keep these lines at the end of the file to retain nice help

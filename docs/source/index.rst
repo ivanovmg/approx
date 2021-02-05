@@ -1,4 +1,4 @@
-equator
+approx
 #######
 
 Set of tools for comparing complex objects
@@ -16,19 +16,19 @@ Set of tools for comparing complex objects
 Quick Start
 ===========
 
-equator is available on PyPI and can be installed with `pip <https://pip.pypa.io>`_.
+approx is available on PyPI and can be installed with `pip <https://pip.pypa.io>`_.
 
 .. code-block:: console
 
-    $ pip install equator
+    $ pip install approx
 
-After installing equator you can use it like any other Python module.
+After installing approx you can use it like any other Python module.
 
 Here is a simple example:
 
 .. code-block:: python
 
-   from equator import equals
+   from approx import approx
 
    item1 = [
        {
@@ -38,7 +38,7 @@ Here is a simple example:
            ],
        },
        [3, [4, [5]]],
-   ] 
+   ]
 
    item2 = [
        {
@@ -50,5 +50,4 @@ Here is a simple example:
        [2.9999, [4, [5.002]]],
    ]
 
-   result = equals.approx(item1, item2, rel_tol=1e-2)
-   assert result
+   assert approx(item1, item2, rel_tol=1e-2)

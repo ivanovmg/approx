@@ -7,7 +7,7 @@
 #
 
 if [ -z "$1" ]; then
-  echo "usage: $0 equator-YY.MM.MICRO-py3-none-any.whl"
+  echo "usage: $0 approx-YY.MM.MICRO-py3-none-any.whl"
   exit
 fi
 

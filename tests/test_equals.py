@@ -14,7 +14,7 @@ from hypothesis import (
 )
 from parameterized import parameterized, param
 
-from equator import equals
+from approx import equals
 
 
 class TestStringHandler(unittest.TestCase):

@@ -15,7 +15,7 @@ from sphinx.ext import apidoc
 
 regexp = re.compile(r'.*__version__ = [\'\"](.*?)[\'\"]', re.S)
 repo_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-pkg_root = os.path.join(repo_root, 'src', 'equator')
+pkg_root = os.path.join(repo_root, 'src', 'approx')
 init_file = os.path.join(pkg_root, '__init__.py')
 with open(init_file, 'r') as f:
     module_content = f.read()
@@ -50,7 +50,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'equator'
+project = 'approx'
 copyright = '2020, Maxim Ivanov'
 author = 'Maxim Ivanov'
 

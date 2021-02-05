@@ -4,10 +4,10 @@ from setuptools import setup, find_packages
 
 regexp = re.compile(r'.*__version__ = [\'\"](.*?)[\'\"]', re.S)
 
-base_package = 'equator'
+base_package = 'approx'
 base_path = os.path.dirname(__file__)
 
-init_file = os.path.join(base_path, 'src', 'equator', '__init__.py')
+init_file = os.path.join(base_path, 'src', 'approx', '__init__.py')
 with open(init_file, 'r') as f:
     module_content = f.read()
 
@@ -39,18 +39,18 @@ requirements = parse_requirements('requirements.txt')
 
 if __name__ == '__main__':
     setup(
-        name='equator',
+        name='approx',
         description='Set of tools for comparing complex objects',
         long_description='\n\n'.join([readme, changes]),
         license='BSD license',
-        url='https://github.com/ivanovmg/equator',
+        url='https://github.com/ivanovmg/approx',
         version=version,
         author='Maxim Ivanov',
         author_email='ivanovmg@gmail.com',
         maintainer='Maxim Ivanov',
         maintainer_email='ivanovmg@gmail.com',
         install_requires=requirements,
-        keywords=['equator'],
+        keywords=['approx'],
         package_dir={'': 'src'},
         packages=find_packages('src'),
         zip_safe=False,

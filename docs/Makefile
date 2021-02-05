@@ -3,7 +3,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = equator
+SPHINXPROJ    = approx
 SOURCEDIR     = source
 BUILDDIR      = build
 

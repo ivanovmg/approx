@@ -3,7 +3,7 @@ import unittest
 
 class TestExample(unittest.TestCase):
     def test_basic_example(self):
-        from equator import equals
+        from approx import approx
 
         item1 = [
             {
@@ -25,7 +25,7 @@ class TestExample(unittest.TestCase):
             [2.9999, [4, [5.002]]],
         ]
 
-        result = equals.approx(item1, item2, rel_tol=1e-2)
+        result = approx(item1, item2, rel_tol=1e-2)
         self.assertTrue(result)
 
 

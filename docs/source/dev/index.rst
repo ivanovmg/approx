@@ -9,12 +9,12 @@ Developers Guide
 Testing
 =======
 
-The equator project implements a regression
+The approx project implements a regression
 test suite that improves developer productivity by identifying capability
 regressions early.
 
 Developers implementing fixes or enhancements must ensure that they have
-not broken existing functionality. The equator
+not broken existing functionality. The approx
 project provides some convenience tools so this testing step can be quickly
 performed.
 
@@ -32,9 +32,9 @@ To run tests verbosely use:
 
 Alternatively, you may want to run the tests suite directly. The following
 steps assume you are running in a virtual environment in which the
-``equator`` package has been installed. If this is
+``approx`` package has been installed. If this is
 not the case then you will likely need to set the ``PYTHONPATH`` environment
-variable so that the ``equator`` package can be found.
+variable so that the ``approx`` package can be found.
 
 .. code-block:: console
 
@@ -147,7 +147,7 @@ environment.
 
     ::
 
-        https://github.com/{username}/equator/releases/{tag}
+        https://github.com/{username}/approx/releases/{tag}
 
 - Create the release distribution. This project produces an artefact called a
   pure Python wheel. The wheel file will be created in the ``dist`` directory.
@@ -171,4 +171,4 @@ environment.
 
       (venv) $ make dist-upload
 
-  The package should now be available at https://pypi.org/project/equator/
+  The package should now be available at https://pypi.org/project/approx/

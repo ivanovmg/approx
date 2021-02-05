@@ -1,3 +1,6 @@
+
+import math
+
 from abc import ABC, abstractmethod
 from collections import UserString
 from collections.abc import (
@@ -6,8 +9,8 @@ from collections.abc import (
     Sequence,
 )
 from decimal import Decimal
-import math
 from numbers import Real
+from typing import List
 
 
 def approx(item1, item2, rel_tol=1e-5, abs_tol=None):
@@ -39,37 +42,34 @@ def approx(item1, item2, rel_tol=1e-5, abs_tol=None):
     raise TypeError(msg)
 
 
-class Handler(ABC):
-
-    @abstractmethod
-    def handle(self, request):
-        pass
-
-
-class GenericHandler(Handler):
-    allowed_types = []
-    forbidden_types = []
+class GenericHandler(ABC):
+    allowed_types: List = []
+    forbidden_types: List = []
 
     def handle(self, item1, item2, **kwargs):
         if self.can_handle(item1, item2):
             return self.check_equal(item1, item2, **kwargs)
 
+    @abstractmethod
+    def check_equal(self, item1, item2, **kwargs):
+        pass
+
     def can_handle(self, item1, item2):
-        return all([
+        return all(
             self._can_handle_one_item(item)
             for item in (item1, item2)
-        ])
+        )
 
     def _can_handle_one_item(self, item):
-        in_allowed_types = any([
+        in_allowed_types = any(
             isinstance(item, type_)
             for type_ in self.allowed_types
-        ])
+        )
 
-        in_forbidden_types = any([
+        in_forbidden_types = any(
             isinstance(item, type_)
             for type_ in self.forbidden_types
-        ])
+        )
 
         return in_allowed_types and not in_forbidden_types
 
@@ -152,6 +152,7 @@ class SetHandler(GenericHandler):
 
 
 class CompositeHandler(GenericHandler):
+
     def can_handle(self, item1, item2):
         return all([
             hasattr(item, '__dict__')

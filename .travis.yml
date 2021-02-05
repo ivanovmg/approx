@@ -10,7 +10,7 @@ before_install:
   - pip install pip --upgrade
 install:
   - make dist
-  - pip install dist/equator-*.whl
+  - pip install dist/approx-*.whl
   - pip install hypothesis parameterized
 script:
   - make test
