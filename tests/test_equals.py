@@ -75,19 +75,50 @@ class TestRealNum(unittest.TestCase):
     def test_almost_equal_decimals(self, item1, item2, rel_tol, abs_tol):
         self.compare_numbers(item1, item2, rel_tol, abs_tol)
 
-    # currently cannot handle decimal nans
-    @unittest.expectedFailure
     @given(
-        item1=st.decimals(allow_nan=True),
-        item2=st.decimals(allow_nan=True),
+        item1=st.decimals(allow_nan=False),
+        item2=st.decimals(allow_nan=False),
         rel_tol=st.floats(min_value=0, max_value=1),
         abs_tol=st.floats(min_value=0, max_value=10),
     )
     @settings(max_examples=10)
-    def test_almost_equal_decimals_with_nans(
+    def test_almost_equal_decimals_no_nans(
         self, item1, item2, rel_tol, abs_tol,
     ):
         self.compare_numbers(item1, item2, rel_tol, abs_tol)
+
+    @parameterized.expand([
+        param(item1=Decimal('NaN'), item2=Decimal('NaN'), expected=False),
+        param(
+            item1=Decimal('Infinity'),
+            item2=Decimal('Infinity'),
+            expected=True,
+        ),
+        param(
+            item1=Decimal('Infinity'),
+            item2=Decimal('-Infinity'),
+            expected=False,
+        ),
+        param(
+            item1=Decimal('-Infinity'),
+            item2=Decimal('+Infinity'),
+            expected=False,
+        ),
+    ])
+    def test_almost_decimals_nans(self, item1, item2, expected):
+        result = approx(item1, item2)
+        self.assertEqual(result, expected)
+
+    # currently cannot handle signalling NaNs
+    @parameterized.expand([
+        param(item1=Decimal('sNaN'), item2=Decimal('sNaN')),
+        param(item1=Decimal('sNaN'), item2=Decimal('NaN')),
+    ])
+    @unittest.expectedFailure
+    def test_decimals_signalling_nans(self, item1, item2):
+        result = approx(item1, item2)
+        expected = False
+        self.assertEqual(result, expected)
 
 
 class TestMapping(unittest.TestCase):
