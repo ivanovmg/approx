@@ -1,9 +1,10 @@
 
 import math
 import unittest
+
 from collections import (
-    UserString,
     OrderedDict,
+    UserString,
 )
 from decimal import Decimal
 
@@ -12,12 +13,12 @@ from hypothesis import (
     settings,
     strategies as st,
 )
-from parameterized import parameterized, param
+from parameterized import param, parameterized
 
-from approx import equals
+from approx import approx
 
 
-class TestStringHandler(unittest.TestCase):
+class TestString(unittest.TestCase):
     @parameterized.expand([
         ('', '', True),
         (' ', ' ', True),
@@ -27,41 +28,31 @@ class TestStringHandler(unittest.TestCase):
         (UserString('string'), UserString('other_string'), False),
     ])
     def test_handle_strings(self, item1, item2, expected):
-        result = equals.StringHandler().handle(item1, item2)
+        result = approx(item1, item2)
         self.assertEqual(result, expected)
 
-    @parameterized.expand([
-        ('string', 0.123),
-        ([3, 4, 5], [1, 2, 3]),
-        ({3, 4, 5}, {1, 2, 3}),
-        ({1: 3, 4: 5}, {1: 2, 3: 2}),
-        (3.14, 'text'),
-        (object(), 'text'),
-        ('string', Decimal(6.28)),
-        ('string', True),
-        ('string', False),
-        ('string', None),
-    ])
-    def test_cannot_handle_other_than_strings(self, item1, item2):
-        result = equals.StringHandler().handle(item1, item2)
-        self.assertEqual(result, None)
 
-    def test_ignore_all_kwargs(self):
-        item1 = 'string'
-        item2 = 'string'
-        result = equals.StringHandler().handle(item1, item2, kwarg='any_kwarg')
-        self.assertTrue(result)
+class TestRealNum(unittest.TestCase):
+    def compare_numbers(self, item1, item2, rel_tol, abs_tol):
+        """Helper method for comparing numbers."""
+        result = approx(
+            item1,
+            item2,
+            rel_tol=rel_tol,
+            abs_tol=abs_tol,
+        )
+        expected = math.isclose(
+            item1,
+            item2,
+            rel_tol=rel_tol,
+            abs_tol=abs_tol,
+        )
+        self.assertEqual(result, expected)
 
-
-class TestRealNumHandler(unittest.TestCase):
     def test_equal_items(self):
         item1 = 3.14
         item2 = 3.14
-        kwargs = {
-            'abs_tol': 0,
-            'rel_tol': 0,
-        }
-        result = equals.RealNumHandler().check_equal(item1, item2, **kwargs)
+        result = approx(item1, item2, abs_tol=0, rel_tol=0)
         self.assertTrue(result)
 
     @given(
@@ -98,39 +89,8 @@ class TestRealNumHandler(unittest.TestCase):
     ):
         self.compare_numbers(item1, item2, rel_tol, abs_tol)
 
-    def compare_numbers(self, item1, item2, rel_tol, abs_tol):
-        handler = equals.RealNumHandler()
-        result = handler.handle(
-            item1,
-            item2,
-            rel_tol=rel_tol,
-            abs_tol=abs_tol,
-        )
-        expected = math.isclose(
-            item1,
-            item2,
-            rel_tol=rel_tol,
-            abs_tol=abs_tol,
-        )
-        self.assertEqual(result, expected)
 
-    @parameterized.expand([
-        ('string', 0.123),
-        ([3, 4, 5], [1, 2, 3]),
-        (3.14, 'text'),
-        (object(), 'text'),
-        ('string', Decimal(6.28)),
-        ('string', True),
-        ('string', False),
-        ('string', None),
-    ])
-    def test_cannot_handle_other_than_numbers(self, item1, item2):
-        handler = equals.RealNumHandler()
-        result = handler.handle(item1, item2)
-        self.assertEqual(result, None)
-
-
-class TestMappingHandler(unittest.TestCase):
+class TestMapping(unittest.TestCase):
     @parameterized.expand([
         param(
             item1={1: [1, 2]},
@@ -176,8 +136,7 @@ class TestMappingHandler(unittest.TestCase):
         ),
     ])
     def test_compare_dicts(self, item1, item2, rel_tol, expected):
-        handler = equals.MappingHandler()
-        result = handler.handle(
+        result = approx(
             item1,
             item2,
             rel_tol=rel_tol,
@@ -185,24 +144,8 @@ class TestMappingHandler(unittest.TestCase):
         )
         self.assertEqual(result, expected)
 
-    @parameterized.expand([
-        ('string', 0.123),
-        ([3, 4, 5], [1, 2, 3]),
-        ({3, 4, 5}, {1, 2, 3}),
-        (3.14, 'text'),
-        (object(), 'text'),
-        ('string', Decimal(6.28)),
-        ('string', True),
-        ('string', False),
-        ('string', None),
-    ])
-    def test_cannot_handle_other_than_dicts(self, item1, item2):
-        handler = equals.MappingHandler()
-        result = handler.handle(item1, item2)
-        self.assertEqual(result, None)
 
-
-class TestSequenceHandler(unittest.TestCase):
+class TestSequence(unittest.TestCase):
     @parameterized.expand([
         param(
             item1=[1, 2, 3],
@@ -236,8 +179,7 @@ class TestSequenceHandler(unittest.TestCase):
         ),
     ])
     def test_compare_sequences(self, item1, item2, rel_tol, expected):
-        handler = equals.SequenceHandler()
-        result = handler.handle(
+        result = approx(
             item1,
             item2,
             rel_tol=rel_tol,
@@ -245,16 +187,8 @@ class TestSequenceHandler(unittest.TestCase):
         )
         self.assertEqual(result, expected)
 
-    @parameterized.expand([
-        ('string', 'another_string'),
-    ])
-    def test_cannot_handle_other_than_sequences(self, item1, item2):
-        handler = equals.SequenceHandler()
-        result = handler.handle(item1, item2)
-        self.assertEqual(result, None)
 
-
-class TestCompositeHandler(unittest.TestCase):
+class TestComposite(unittest.TestCase):
     class CompositeObject:
         def __init__(self, num, string, seq):
             self.num = num
@@ -278,8 +212,7 @@ class TestCompositeHandler(unittest.TestCase):
             [1.0001, {1.0001: 'string'}],
         )
 
-        handler = equals.CompositeHandler()
-        result = handler.handle(
+        result = approx(
             item1,
             item2,
             rel_tol=rel_tol,
@@ -296,10 +229,16 @@ class TestApprox(unittest.TestCase):
         (list(), dict()),
         (set(), dict()),
         ([1, 2], {1: '2'}),
+        (3.14, 'text'),
+        (object(), 'text'),
+        ('string', Decimal(6.28)),
+        ('string', True),
+        ('string', False),
+        ('string', None),
     ])
     def test_uncomparable_objects_raises(self, item1, item2):
         with self.assertRaises(TypeError, msg='Cannot compare'):
-            equals.approx(item1, item2)
+            approx(item1, item2)
 
 
 if __name__ == '__main__':
